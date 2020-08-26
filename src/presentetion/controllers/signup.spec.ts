@@ -1,8 +1,6 @@
 import { EmailValidator } from '../protocols/email-validator'
-import { MissingParamError } from './../errors/missing-param-error'
+import { MissingParamError, InvalidParamError, ServerError } from './../errors'
 import { SignUpController } from './signup'
-import { InvalidParamError } from '../errors/invalid-param-error'
-import { ServerError } from '../errors/missing-server-error'
 
 interface SutTypes{
   sut: SignUpController
@@ -124,7 +122,7 @@ describe('Signup Controller', () => {
   test('Should return 500 if EmailValidator throws', () => {
     class EmailValidatorStub implements EmailValidator {
       isValid (email: string): boolean {
-        throw new Error()
+        throw new Error('Teste')
       }
     }
 
