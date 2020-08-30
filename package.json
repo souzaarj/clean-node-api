@@ -1,12 +1,17 @@
+
 {
   "name": "clean-node-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "scripts": {
+   "scripts": {
     "lint": "eslint . --ext .ts",
-    "test": "jest --passWithNoTests --watch",
-    "test:staged": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:staged": "npm test -- -o",
+    "test:ci": "npm test -- --coverage",
     "check": "npm-check -s -u"
   },
   "keywords": [],
@@ -14,20 +19,28 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^26.0.10",
-    "@types/node": "^14.6.0",
-    "@typescript-eslint/eslint-plugin": "^3.9.1",
+    "@types/node": "^14.6.2",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
     "eslint": "^7.7.0",
     "eslint-config-standard-with-typescript": "^18.0.2",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "git-commit-msg-linter": "^2.4.4",
+    "git-commit-msg-linter": "^2.5.2",
     "husky": "^4.2.5",
     "jest": "^26.4.2",
-    "lint-staged": "^10.2.11",
-    "ts-jest": "^26.2.0",
+    "lint-staged": "^10.2.13",
+    "ts-jest": "^26.3.0",
     "typescript": "^4.0.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix"
+  }
 }
