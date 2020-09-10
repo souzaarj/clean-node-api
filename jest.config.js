@@ -10,6 +10,7 @@ const config = {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/**/*-protocols.ts',
+    '!<rootDir>/src/main/**',
     '!**/protocols/**'
   ],
 

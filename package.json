@@ -8,7 +8,7 @@
     "start:watch": "nodemon",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --detectOpenHandles --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
