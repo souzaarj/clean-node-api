@@ -1,3 +1,4 @@
+import { serverError } from './../../helpers/http-helper'
 import { AddAccount, AddAccountModel, AccountModel, EmailValidator } from './signup-protocols'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
@@ -179,7 +180,7 @@ describe('Signup Controller', () => {
   test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
-      return await Promise.reject(new Error())
+      throw new Error()
     })
 
     const httpRequest = {
@@ -192,7 +193,7 @@ describe('Signup Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse).toEqual(serverError(new ServerError('')))
   })
 
   test('Should return 500 if EmailValidator throws', async () => {
@@ -208,7 +209,7 @@ describe('Signup Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse).toEqual(serverError(new ServerError('')))
   })
 
   test('Should return 200 if an valid data is provided', async () => {
