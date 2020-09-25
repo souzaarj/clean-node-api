@@ -5,8 +5,12 @@ import { badRequest } from '../../helpers/http-helper'
 
 export class SinginController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    if (!httpRequest.body?.user) {
-      return badRequest(new MissingParamError('user'))
+    const parameters = ['user']
+
+    for (const parameter of parameters) {
+      if (!httpRequest.body[parameter]) {
+        return badRequest(new MissingParamError('user'))
+      }
     }
 
     return await Promise.resolve({
