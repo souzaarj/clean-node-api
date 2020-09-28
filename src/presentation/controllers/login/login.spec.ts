@@ -1,11 +1,10 @@
-import { Authentication } from './../../../domain/usecases/authentication'
-import { ServerError } from './../../errors/server-error'
-import { serverError, unauthorized } from './../../helpers/http-helper'
-import { InvalidParamError } from './../../errors/invalid-param-error'
-import { EmailValidator } from './../../protocols/email-validator'
+import { Authentication } from '../../../domain/usecases/authentication'
+import { ServerError } from '../../errors/server-error'
+import { serverError, badRequest, unauthorized } from '../../helpers/http-helper'
+import { InvalidParamError } from '../../errors/invalid-param-error'
+import { EmailValidator } from '../../protocols/email-validator'
 import { HttpRequest } from '../../protocols/http'
 import { LoginController } from './login'
-import { badRequest } from '../../helpers/http-helper'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -17,12 +16,12 @@ const makeEmailValidator = (): EmailValidator => {
 }
 
 const makeAuthenticationStub = (): Authentication => {
-  class AutenticationStub implements Authentication {
-    async auth (email: string, passwor: string): Promise<String> {
+  class AuthenticationStub implements Authentication {
+    async auth (email: string, password: string): Promise<String> {
       return 'any_token'
     }
   }
-  return new AutenticationStub()
+  return new AuthenticationStub()
 }
 
 interface SutTypes {
@@ -104,7 +103,7 @@ describe('Signin Controller', () => {
     expect(authSpy).toBeCalledWith('any_email@mail.com', 'any_password')
   })
 
-  test('Shold return 401 if invalid credentials as provide', async () => {
+  test('Should return 401 if invalid credentials as provide', async () => {
     const { sut, authenticationStub } = makeSut()
     jest.spyOn(authenticationStub, 'auth').mockResolvedValueOnce('')
     const httpResponse = await sut.handle(makeFakeHttpRequest())
