@@ -1,6 +1,6 @@
 import { Authentication } from './../../../domain/usecases/authentication'
 import { ServerError } from './../../errors/server-error'
-import { serverError } from './../../helpers/http-helper'
+import { serverError, unauthorized } from './../../helpers/http-helper'
 import { InvalidParamError } from './../../errors/invalid-param-error'
 import { EmailValidator } from './../../protocols/email-validator'
 import { HttpRequest } from '../../protocols/http'
@@ -102,5 +102,12 @@ describe('Signin Controller', () => {
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeHttpRequest())
     expect(authSpy).toBeCalledWith('any_email@mail.com', 'any_password')
+  })
+
+  test('Shold return 401 if invalid credentials as provide', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockResolvedValueOnce('')
+    const httpResponse = await sut.handle(makeFakeHttpRequest())
+    expect(httpResponse).toEqual(unauthorized())
   })
 })
