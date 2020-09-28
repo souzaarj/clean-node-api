@@ -1,3 +1,4 @@
+import { success } from './../../helpers/http-helper'
 import { Authentication } from '../../../domain/usecases/authentication'
 import { ServerError } from '../../errors/server-error'
 import { serverError, badRequest, unauthorized } from '../../helpers/http-helper'
@@ -115,5 +116,11 @@ describe('Signin Controller', () => {
     jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(async () => { throw new Error() })
     const httpResponse = await sut.handle(makeFakeHttpRequest())
     expect(httpResponse).toEqual(serverError(new ServerError('')))
+  })
+
+  test('Should return 200 if valid credentials are provide', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeHttpRequest())
+    expect(httpResponse).toEqual(success({ accessToken: 'any_token' }))
   })
 })
