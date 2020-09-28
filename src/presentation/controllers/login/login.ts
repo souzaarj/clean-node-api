@@ -35,7 +35,7 @@ export class LoginController implements Controller {
         return unauthorized()
       }
 
-      return success(accessToken)
+      return success({ accessToken })
     } catch (error) {
       return serverError(error)
     }
