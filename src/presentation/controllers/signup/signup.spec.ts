@@ -61,8 +61,8 @@ const makeSut = (): SutTypes => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate (input: any): Error | null {
-      return null
+    validate (input: any): Error | undefined {
+      return undefined
     }
   }
   return new ValidationStub()
@@ -70,21 +70,6 @@ const makeValidation = (): Validation => {
 
 describe('Signup Controller', () => {
   // deve retornar 400 se nenhum nome for fornecido
-
-  test('Should return 400 if passwordConfirmation fails', async () => {
-    // sut = system under test
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        email: 'any_email@MediaList.com',
-        password: 'any_password',
-        passwordConfirmation: 'invalid_password'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest((new InvalidParamError('passwordConfirmation'))))
-  })
 
   test('Should return 400 if an invalid email is provided', async () => {
     // sut = system under test
