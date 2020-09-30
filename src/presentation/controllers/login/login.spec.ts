@@ -66,7 +66,7 @@ const makeFakeHttpRequest = (): HttpRequest => ({
   }
 })
 
-describe('Signin Controller', () => {
+describe('Login Controller', () => {
   test('Should returns 400 if no user is provide', async () => {
     const { sut } = makeSut()
     const httpRequest: HttpRequest = {
