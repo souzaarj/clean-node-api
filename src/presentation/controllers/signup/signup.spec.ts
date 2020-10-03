@@ -1,8 +1,12 @@
-import { Validation } from './../../helpers/validators/validation'
-import { HttpRequest } from './../../protocols/http'
-import { AddAccount, AddAccountModel, AccountModel } from './signup-protocols'
-import { MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
+import {
+  AddAccount,
+  AddAccountModel,
+  AccountModel,
+  HttpRequest,
+  Validation
+} from './signup-protocols'
+import { MissingParamError, ServerError } from '../../errors'
 import { success, badRequest, serverError } from '../../helpers/http-helper'
 
 const makeAddAccount = (): AddAccount => {
@@ -58,8 +62,6 @@ const makeValidation = (): Validation => {
 }
 
 describe('Signup Controller', () => {
-  // deve retornar 400 se nenhum nome for fornecido
-
   test('Should call addAccount with correct values', async () => {
     // sut = system under test
     const { sut, addAccountStub } = makeSut()
