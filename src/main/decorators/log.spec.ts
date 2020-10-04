@@ -1,4 +1,4 @@
-import { serverError, success } from './../../presentation/helpers/http-helper'
+import { serverError, success } from '../../presentation/helpers/http/http-helper'
 import { Controller, HttpResponse, HttpRequest } from './../../presentation/protocols'
 import { LogControllerDecorator } from './logs'
 import { LogErrorRepository } from '../../data/protocols/log-error-repository'

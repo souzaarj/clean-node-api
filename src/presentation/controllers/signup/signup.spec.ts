@@ -7,7 +7,7 @@ import {
   Validation
 } from './signup-protocols'
 import { MissingParamError, ServerError } from '../../errors'
-import { success, badRequest, serverError } from '../../helpers/http-helper'
+import { success, badRequest, serverError } from '../../helpers/http/http-helper'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
