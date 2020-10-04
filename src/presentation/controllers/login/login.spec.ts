@@ -1,3 +1,4 @@
+import { AuthenticationModel } from './../../../domain/usecases/authentication'
 import { LoginController } from './login'
 import {
   success,
@@ -14,7 +15,7 @@ import {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (email: string, password: string): Promise<String> {
+    async auth (authentication: AuthenticationModel): Promise<String> {
       return 'any_token'
     }
   }
@@ -62,7 +63,7 @@ describe('Login Controller', () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeHttpRequest())
-    expect(authSpy).toBeCalledWith('any_email@mail.com', 'any_password')
+    expect(authSpy).toBeCalledWith({ email: 'any_email@mail.com', password: 'any_password' })
   })
 
   test('Should return 401 if invalid credentials as provided', async () => {
