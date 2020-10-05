@@ -1,4 +1,4 @@
-import { LoadAccountByEmailRepository } from './../../protocols/load-account-by-email-repository'
+import { LoadAccountByEmailRepository } from './../../protocols/db/load-account-by-email-repository'
 import { Authentication, AuthenticationModel } from './../../../domain/usecases/authentication'
 export class DbAuthentication implements Authentication {
   private readonly loadAccountByEmailRepository
@@ -9,6 +9,6 @@ export class DbAuthentication implements Authentication {
 
   async auth (authentication: AuthenticationModel): Promise<String> {
     await this.loadAccountByEmailRepository.load(authentication.email)
-    return ''
+    return null
   }
 }
