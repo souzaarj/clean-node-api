@@ -5,7 +5,7 @@ import { AccountModel } from '../../../../domain/models/account-protocols'
 import { AddAccountRepository } from '../../../../data/protocols/db/account/add-account-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 
-export class AddAccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
+export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository {
   [x: string]: any
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')

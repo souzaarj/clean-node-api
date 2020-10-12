@@ -1,4 +1,4 @@
-import { AddAccountMongoRepository } from './account-mongo-repository'
+import { AccountMongoRepository } from './account-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
 
@@ -19,8 +19,8 @@ describe('Account Mongo Repository', () => {
     await accountCollection.deleteMany({})
   })
 
-  const makeSut = (): AddAccountMongoRepository => {
-    return new AddAccountMongoRepository()
+  const makeSut = (): AccountMongoRepository => {
+    return new AccountMongoRepository()
   }
 
   test('Should return an account on add success', async () => {
