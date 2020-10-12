@@ -18,7 +18,7 @@ describe('Login Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  test('Should return an token on success', async () => {
+  test('Should return 200 on login', async () => {
     app.get('/test_cors', (request, response) => {
       response.send()
     })
@@ -39,5 +39,19 @@ describe('Login Routes', () => {
         password: '123'
       })
       .expect(200)
+  })
+
+  test('Should return 401 on login', async () => {
+    app.get('/test_cors', (request, response) => {
+      response.send()
+    })
+
+    await request(app)
+      .post('/api/login')
+      .send({
+        email: 'rodrido@email.com',
+        password: '123'
+      })
+      .expect(401)
   })
 })
