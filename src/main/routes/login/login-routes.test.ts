@@ -1,8 +1,8 @@
 import request from 'supertest'
-import app from '../config/app'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '../../../infra/db/mongodb/helpers/mongo-helper'
+import app from '../../config/app'
 
-describe('Signup Routes', () => {
+describe('Login Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(
       process.env.MONGO_URL ?? 'mongodb://localhost:27017'
@@ -18,7 +18,7 @@ describe('Signup Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  test('Should return an account on success', async () => {
+  test('Should return an token on success', async () => {
     app.get('/test_cors', (request, response) => {
       response.send()
     })
@@ -30,6 +30,13 @@ describe('Signup Routes', () => {
         email: 'rodrido@email.com',
         password: '123',
         passwordConfirmation: '123'
+      })
+
+    await request(app)
+      .post('/api/login')
+      .send({
+        email: 'rodrido@email.com',
+        password: '123'
       })
       .expect(200)
   })
