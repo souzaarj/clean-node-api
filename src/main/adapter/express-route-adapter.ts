@@ -2,7 +2,7 @@ import { HttpRequest } from './../../presentation/protocols/http'
 import { Controller } from './../../presentation/protocols/controller'
 import { Request, Response } from 'express'
 
-export const adaptRoute = (controller: Controller) => {
+export const adapterRoute = (controller: Controller) => {
   return async (req: Request, res: Response) => {
     const httpRequest: HttpRequest = {
       body: req.body
