@@ -62,5 +62,8 @@
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
