@@ -9,7 +9,7 @@
 const config = {
    "*.ts": [
      "eslint 'src/**' --fix",
-     "npm run test:staged"
+    "npm run test:staged"
    ]
 }
  
