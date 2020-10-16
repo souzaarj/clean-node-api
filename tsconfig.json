@@ -6,8 +6,9 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,              /* Enable strict null checks. */
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+    "strictNullChecks": false,              
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "src"
   },
   "include": [
     "src"
