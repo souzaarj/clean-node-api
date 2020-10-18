@@ -1,4 +1,4 @@
-import { AuthenticationModel } from '../../../domain/usecases/authentication'
+import { AuthenticationModel } from '../../../domain/usecases/authentication-protocols'
 import { LoginController } from './login-controller'
 import {
   success,
