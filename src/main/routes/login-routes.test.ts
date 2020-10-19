@@ -3,6 +3,7 @@ import request from 'supertest'
 import app from '../config/app'
 import { Collection } from 'mongodb'
 import { hash } from 'bcrypt'
+
 let accountCollection: Collection
 
 describe('Login Routes', () => {
