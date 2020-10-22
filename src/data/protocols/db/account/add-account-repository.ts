@@ -1,4 +1,4 @@
-import { AccountModel } from './../../../../domain/models/account-protocols'
+import { AccountModel } from '../../../../domain/models/login/account-protocols'
 import { AddAccountModel } from './../../../../domain/usecases/add-account-protocols'
 
 export interface AddAccountRepository {

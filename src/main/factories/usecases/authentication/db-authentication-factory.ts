@@ -2,7 +2,7 @@ import { DbAuthentication } from '../../../../data/usecases/authentication/db-au
 import { AccountMongoRepository } from '../../../../infra/db/mongodb/account/account-mongo-repository'
 import { JwtAdapter } from '../../../../infra/criptography/jwt-adapter/jwt-adapter'
 import { BcryptAdapter } from '../../../../infra/criptography/bcrypt-adapter/bcrypt-adapter'
-import { Authentication } from '../../../../domain/usecases/authentication-protocols'
+import { Authentication } from '../../../../domain/usecases/login/authentication-protocols'
 import env from '../../../config/env'
 
 export const makeDbAuthentication = (): Authentication => {
