@@ -9,9 +9,8 @@ describe('Account Mongo Repository', () => {
     await MongoHelper.connect(process.env.MONGO_URL ?? 'mongodb://localhost:27017')
   })
 
-  afterAll(async done => {
+  afterAll(async () => {
     await MongoHelper.disconnect()
-    done()
   })
 
   beforeEach(async () => {

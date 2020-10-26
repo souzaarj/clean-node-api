@@ -35,7 +35,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbAddSurvey', () => {
+describe('DbAddSurvey Usecase', () => {
   test('Should call AddSurveyRepository with correct values', async () => {
     const { sut, addSurveyRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addSurveyRepositoryStub, 'add')
