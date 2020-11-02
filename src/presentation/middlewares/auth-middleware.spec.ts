@@ -33,9 +33,9 @@ interface sutTypes {
   loadAccountByTokenStub: LoadAccountByToken
 }
 
-const makeSut = (): sutTypes => {
+const makeSut = (role?: string): sutTypes => {
   const loadAccountByTokenStub = makeLoadAccountByTokenStub()
-  const sut = new AuthMiddleware(loadAccountByTokenStub)
+  const sut = new AuthMiddleware(loadAccountByTokenStub, role)
   return {
     sut,
     loadAccountByTokenStub
@@ -49,27 +49,28 @@ describe('Auth Middleware', () => {
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
 
-  test('Should call lodAccountByToken with correct accessToken', async () => {
-    const { sut, loadAccountByTokenStub } = makeSut()
+  test('Should call LodAccountByToken with correct accessToken', async () => {
+    const role = 'any_role'
+    const { sut, loadAccountByTokenStub } = makeSut(role)
     const loadSpy = jest.spyOn(loadAccountByTokenStub, 'load')
     await sut.handle(makeFakeRequest())
-    expect(loadSpy).toHaveBeenCalledWith('any_token')
+    expect(loadSpy).toHaveBeenCalledWith('any_token', role)
   })
 
-  test('Should return 403 if lodAccountByToken return null', async () => {
+  test('Should return 403 if LodAccountByToken return null', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
     jest.spyOn(loadAccountByTokenStub, 'load').mockResolvedValueOnce(null)
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
 
-  test('Should return 200 if lodAccountByToken return an Account', async () => {
+  test('Should return 200 if LodAccountByToken return an Account', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(success({ accountId: 'valid_id' }))
   })
 
-  test('Should return 500 if lodAccountByToken throws', async () => {
+  test('Should return 500 if LodAccountByToken throws', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
     jest.spyOn(loadAccountByTokenStub, 'load').mockRejectedValueOnce(new Error())
     const httpResponse = await sut.handle(makeFakeRequest())
