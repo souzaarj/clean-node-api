@@ -4,8 +4,9 @@ import { ValidationComposite } from '../../../../validation/validators/validatio
 export const makeAddSurveyValidation = (): ValidationComposite => {
   const validations: Validation[] = []
   const fields: string[] = ['question', 'answers']
-
+  // const propertiesAnswer = ['answer']
   fields.forEach(field => validations.push(new RequiredFieldValidation(field)))
+  // propertiesAnswer.forEach(field => validations.push(new RequiredFieldPropertyValidation(field)))
 
   return new ValidationComposite(validations)
 }

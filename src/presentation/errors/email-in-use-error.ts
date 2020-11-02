@@ -1,7 +1,8 @@
 
 export class EmailInUseError extends Error {
   constructor () {
-    super('The received email is alredy in use')
+    const msg = 'The received email is already in use'
+    super(msg)
     this.name = 'EmailInUseError'
   }
 }
