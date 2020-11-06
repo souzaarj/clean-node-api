@@ -1,4 +1,4 @@
-import { serverError, success } from '../../presentation/helpers/http/http-helper'
+import { serverError, ok } from '../../presentation/helpers/http/http-helper'
 import { Controller, HttpResponse, HttpRequest } from '../../presentation/protocols'
 import { LogControllerDecorator } from './log-controller-decorator'
 import { LogErrorRepository } from '../../data/protocols/db/log/log-error-repository'
@@ -6,7 +6,7 @@ import { LogErrorRepository } from '../../data/protocols/db/log/log-error-reposi
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      return await Promise.resolve(success(makeFakeHttpResponse()))
+      return await Promise.resolve(ok(makeFakeHttpResponse()))
     }
   }
   return new ControllerStub()
@@ -64,7 +64,7 @@ describe('LogController Decorator', () => {
   test('Should return the same result of the controller', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(success(makeFakeHttpResponse()))
+    expect(httpResponse).toEqual(ok(makeFakeHttpResponse()))
   })
 
   test('Should call LogErrorRepository with correct error if controller return a server error', async () => {

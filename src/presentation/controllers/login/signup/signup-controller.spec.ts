@@ -9,7 +9,7 @@ import {
   AuthenticationModel
 } from './signup-controller-protocols'
 import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
-import { success, badRequest, serverError, forbidden } from '../../../helpers/http/http-helper'
+import { ok, badRequest, serverError, forbidden } from '../../../helpers/http/http-helper'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
@@ -110,7 +110,7 @@ describe('Signup Controller', () => {
     // sut = system under test
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(success({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 
   test('Should calls Validation with correct values', async () => {
