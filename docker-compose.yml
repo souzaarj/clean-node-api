@@ -11,32 +11,32 @@ services:
     ports:
       - "27017:27017"
   
-  postgres:
-    container_name: postgres-container
-    image: postgres:13
-    environment:
-          POSTGRES_DB: clean-node-api
-          POSTGRES_USER: 'root'
-          POSTGRES_PASSWORD: "root!"
-    restart: always
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./postgres/data/db:/var/lib/postgresql/data 
-    networks:
-      - postgres-compose-network
+  # postgres:
+  #   container_name: postgres-container
+  #   image: postgres:13
+  #   environment:
+  #         POSTGRES_DB: clean-node-api
+  #         POSTGRES_USER: 'root'
+  #         POSTGRES_PASSWORD: "root!"
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - ./postgres/data/db:/var/lib/postgresql/data 
+  #   networks:
+  #     - postgres-compose-network
 
-  pgAdmin:
-    image: dpage/pgadmin4
-    environment:
-        PGADMIN_DEFAULT_EMAIL: "nil.nilson@gmail.com"
-        PGADMIN_DEFAULT_PASSWORD: "root!"
-    ports:
-        - "16543:80"
-    depends_on:
-        - postgres
-    networks:
-        - postgres-compose-network
+  # pgAdmin:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #       PGADMIN_DEFAULT_EMAIL: "nil.nilson@gmail.com"
+  #       PGADMIN_DEFAULT_PASSWORD: "root!"
+  #   ports:
+  #       - "16543:80"
+  #   depends_on:
+  #       - postgres
+  #   networks:
+  #       - postgres-compose-network
 
   api:
     container_name: api-container
@@ -54,8 +54,7 @@ services:
       - "9222:9222"
     links:
       - mongo
-      - postgres
-
-networks: 
-  postgres-compose-network:
-    driver: bridge
+  
+# networks: 
+#   postgres-compose-network:
+#     driver: bridge

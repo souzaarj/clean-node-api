@@ -12,7 +12,7 @@ const makeFakeAccount = (): AccountModel => ({
 
 const makeDecrypterStub = (): Decrypter => {
   class DecrypterStub implements Decrypter {
-    async decrypt (tokem: string): Promise<string> {
+    async decrypt (token: string): Promise<string> {
       return 'any_value'
     }
   }
@@ -63,7 +63,7 @@ describe('DBLoadAccountByToken Usecase', () => {
     const { sut, loadAccountByTokenRepositoryStub } = makeSut()
     const loadByTokenSpy = jest.spyOn(loadAccountByTokenRepositoryStub, 'loadByToken')
     await sut.load('any_token', 'any_role')
-    expect(loadByTokenSpy).toHaveBeenCalledWith('any_value', 'any_role')
+    expect(loadByTokenSpy).toHaveBeenCalledWith('any_token', 'any_role')
   })
 
   test('Should return null if LoadAccountByTokenRepository return null', async () => {
