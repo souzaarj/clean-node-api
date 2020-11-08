@@ -1,7 +1,7 @@
 export default {
   mongoDBAtlasConfig: {
     mongoURI:
-      'mongodb+srv://root:**********@cluster0.umchi.gcp.mongodb.net/clean-node-api?retryWrites=true&w=majority',
+      'mongodb+srv://<user>:<password>@cluster0.umchi.gcp.mongodb.net/clean-node-api?retryWrites=true&w=majority',
     mongoCFG: {
       useNewUrlParser: true,
       useUnifiedTopology: true
