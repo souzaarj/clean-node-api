@@ -26,7 +26,8 @@ describe('SurveyMongoRepository', () => {
       },
       {
         answer: 'other_answer'
-      }]
+      }],
+      date: new Date()
     }
     await sut.add(fakeSurvey)
     const surveys = await surveyCollection.findOne({ question: 'any_question' })

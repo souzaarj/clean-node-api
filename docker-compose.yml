@@ -56,5 +56,3 @@ services:
 # networks: 
 #   postgres-compose-network:
 #     driver: bridge
-
-git log --pretty=format:'%C(blue) %h %C(red) %d(white) %s - %cn, %cr'
