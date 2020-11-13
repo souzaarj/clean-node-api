@@ -3,8 +3,6 @@ services:
   mongo:
     container_name: mongo-container
     image: mongo:3
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
     restart: always
     volumes:
       - ./data/db:/data/db
@@ -58,3 +56,5 @@ services:
 # networks: 
 #   postgres-compose-network:
 #     driver: bridge
+
+git log --pretty=format:'%C(blue) %h %C(red) %d(white) %s - %cn, %cr'
