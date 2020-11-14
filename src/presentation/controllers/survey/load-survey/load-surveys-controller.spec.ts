@@ -3,22 +3,26 @@ import { SurveyModel } from './../../../../domain/models/survey/survey-protocols
 import { LoadSurveys } from './../../../../domain/usecases/survey/load-survey-protocols'
 import { LoadSurveysController } from './load-surveys-controller'
 
-const makeLoadSurveysStub = (): LoadSurveys => {
-  class LoadsSurveyStub implements LoadSurveys {
-    async load (): Promise<SurveyModel[]> {
-      return [
-        {
-          id: 'any_id',
-          question: 'any_question',
-          answers:
+const makeFakeSurveys = (): SurveyModel[] => {
+  return [
+    {
+      id: 'any_id',
+      question: 'any_question',
+      answers:
             [
               {
                 image: 'any_image',
                 answer: 'any_survey'
               }
             ]
-        }
-      ]
+    }
+  ]
+}
+
+const makeLoadSurveysStub = (): LoadSurveys => {
+  class LoadsSurveyStub implements LoadSurveys {
+    async load (): Promise<SurveyModel[]> {
+      return makeFakeSurveys()
     }
   }
   return new LoadsSurveyStub()
@@ -44,6 +48,12 @@ describe('Load Survey Controller', () => {
     const loadSurveysSpy = jest.spyOn(loadSurveysStub, 'load')
     await sut.handle({})
     expect(loadSurveysSpy).toHaveBeenCalled()
+  })
+
+  test('Should returns Surveys on success', async () => {
+    const { sut } = makeSut()
+    const surveys = await sut.handle({})
+    expect(surveys.body).toEqual(makeFakeSurveys())
   })
 
   test('Should return 500 if loadSurvey throws', async () => {
