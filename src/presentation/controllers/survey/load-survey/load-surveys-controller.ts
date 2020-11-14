@@ -1,7 +1,5 @@
 import { serverError, ok } from './../../../helpers/http/http-helper'
-import { LoadSurveys } from './../../../../domain/usecases/survey/load-survey-protocols'
-import { HttpRequest, HttpResponse } from '../../../protocols'
-import { Controller } from '../../../protocols/controller'
+import { HttpRequest, HttpResponse , LoadSurveys, Controller } from './load-survey-controller-protocols'
 export class LoadSurveysController implements Controller {
   constructor (private readonly loadSurveys: LoadSurveys) { }
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {

@@ -8,6 +8,17 @@ import env from '../config/env'
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const fakeAnswer = {
+  question: 'Question',
+  answers: [{
+    image: 'http://image-name.com',
+    answer: 'answer 1'
+  },
+  {
+    answer: 'answer 2'
+  }]
+}
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -27,16 +38,7 @@ describe('Survey Routes', () => {
   test('Should return 403 on add survey without accessToken', async () => {
     await request(app)
       .post('/api/surveys')
-      .send({
-        question: 'Question',
-        answers: [{
-          image: 'http://image-name.com',
-          answer: 'answer 1'
-        },
-        {
-          answer: 'answer 2'
-        }]
-      })
+      .send(fakeAnswer)
       .expect(403)
   })
 
@@ -64,16 +66,32 @@ describe('Survey Routes', () => {
     await request(app)
       .post('/api/surveys')
       .set('x-access-token', accessToken)
-      .send({
-        question: 'Question',
-        answers: [{
-          image: 'http://image-name.com',
-          answer: 'answer 1'
-        },
-        {
-          answer: 'answer 2'
-        }]
-      })
+      .send(fakeAnswer)
       .expect(204)
+  })
+
+  test('Should return all Surveys on success', async () => {
+    await surveyCollection.insertOne(fakeAnswer)
+
+    const surveys = await request(app)
+      .get('/api/surveys')
+
+    expect(surveys.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(
+          {
+            question: 'Question',
+            answers: [{
+              image: 'http://image-name.com',
+              answer: 'answer 1'
+            },
+            {
+              answer: 'answer 2'
+            }]
+          }
+        )
+      ]
+      )
+    )
   })
 })

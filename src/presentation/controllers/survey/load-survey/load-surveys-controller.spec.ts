@@ -1,6 +1,6 @@
+import mockDate from 'mockdate'
 import { serverError, ok } from './../../../helpers/http/http-helper'
-import { SurveyModel } from './../../../../domain/models/survey/survey-protocols'
-import { LoadSurveys } from './../../../../domain/usecases/survey/load-survey-protocols'
+import { LoadSurveys, SurveyModel } from './load-survey-controller-protocols'
 import { LoadSurveysController } from './load-surveys-controller'
 
 const makeFakeSurveys = (): SurveyModel[] => {
@@ -14,7 +14,8 @@ const makeFakeSurveys = (): SurveyModel[] => {
                 image: 'any_image',
                 answer: 'any_survey'
               }
-            ]
+            ],
+      date: new Date()
     }
   ]
 }
@@ -42,7 +43,10 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('Load Survey Controller', () => {
+describe('LoadSurveys Controller', () => {
+  beforeAll(() => mockDate.set(new Date()))
+  afterAll(() => mockDate.reset())
+
   test('Should call loadSurveys', async () => {
     const { sut, loadSurveysStub } = makeSut()
     const loadSurveysSpy = jest.spyOn(loadSurveysStub, 'load')
@@ -50,7 +54,7 @@ describe('Load Survey Controller', () => {
     expect(loadSurveysSpy).toHaveBeenCalled()
   })
 
-  test('Should returns Surveys on success', async () => {
+  test('Should returns 200 on success', async () => {
     const { sut } = makeSut()
     const surveys = await sut.handle({})
     expect(surveys).toEqual(ok(makeFakeSurveys()))
