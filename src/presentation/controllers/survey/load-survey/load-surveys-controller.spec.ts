@@ -1,3 +1,4 @@
+import { serverError } from './../../../helpers/http/http-helper'
 import { SurveyModel } from './../../../../domain/models/survey/survey-protocols'
 import { LoadSurveys } from './../../../../domain/usecases/survey/load-survey-protocols'
 import { LoadSurveysController } from './load-surveys-controller'
@@ -43,5 +44,12 @@ describe('Load Survey Controller', () => {
     const loadSurveysSpy = jest.spyOn(loadSurveysStub, 'load')
     await sut.handle({})
     expect(loadSurveysSpy).toHaveBeenCalled()
+  })
+
+  test('Should return 500 if loadSurvey throws', async () => {
+    const { sut, loadSurveysStub } = makeSut()
+    jest.spyOn(loadSurveysStub, 'load').mockRejectedValueOnce(new Error())
+    const response = await sut.handle({})
+    expect(response).toEqual(serverError(new Error()))
   })
 })
