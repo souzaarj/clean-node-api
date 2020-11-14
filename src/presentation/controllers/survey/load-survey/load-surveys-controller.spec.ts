@@ -1,4 +1,4 @@
-import { serverError } from './../../../helpers/http/http-helper'
+import { serverError, ok } from './../../../helpers/http/http-helper'
 import { SurveyModel } from './../../../../domain/models/survey/survey-protocols'
 import { LoadSurveys } from './../../../../domain/usecases/survey/load-survey-protocols'
 import { LoadSurveysController } from './load-surveys-controller'
@@ -53,7 +53,7 @@ describe('Load Survey Controller', () => {
   test('Should returns Surveys on success', async () => {
     const { sut } = makeSut()
     const surveys = await sut.handle({})
-    expect(surveys.body).toEqual(makeFakeSurveys())
+    expect(surveys).toEqual(ok(makeFakeSurveys()))
   })
 
   test('Should return 500 if loadSurvey throws', async () => {
