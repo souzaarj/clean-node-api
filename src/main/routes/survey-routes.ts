@@ -8,6 +8,7 @@ import { Router } from 'express'
 
 export default (router: Router): void => {
   const adminAuth = adapterMiddleware(makeAuthMiddleware('admin'))
+  const auth = adapterMiddleware(makeAuthMiddleware())
   router.post('/surveys', adminAuth, adapterRoute(makeAddSurveyController()))
-  router.get('/surveys', adapterRoute(makeLoadSurveysController()))
+  router.get('/surveys', auth, adapterRoute(makeLoadSurveysController()))
 }
