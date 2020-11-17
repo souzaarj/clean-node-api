@@ -16,6 +16,18 @@ const makeFakeSurveys = (): SurveyModel[] => {
               }
             ],
       date: new Date()
+    },
+    {
+      id: 'other_id',
+      question: 'other_question',
+      answers:
+            [
+              {
+                image: 'other_image',
+                answer: 'other_survey'
+              }
+            ],
+      date: new Date()
     }
   ]
 }
