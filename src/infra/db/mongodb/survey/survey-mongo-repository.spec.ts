@@ -48,7 +48,7 @@ describe('SurveyMongoRepository', () => {
   test('Should load surveys into survey collection', async () => {
     const sut = makeSut()
     await surveyCollection.insertOne(makeFakeAddSurvey())
-    const surveys = await sut.load()
+    const surveys = await sut.loadAll()
     expect(surveys).toEqual(
       expect.arrayContaining([
         expect.objectContaining(makeFakeAddSurvey())
