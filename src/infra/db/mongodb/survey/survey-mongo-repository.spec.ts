@@ -55,4 +55,10 @@ describe('SurveyMongoRepository', () => {
       ])
     )
   })
+
+  test('Should load empty list', async () => {
+    const sut = makeSut()
+    const surveys = await sut.loadAll()
+    expect(surveys).toHaveLength(0)
+  })
 })
