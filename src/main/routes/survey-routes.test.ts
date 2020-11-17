@@ -19,22 +19,22 @@ const fakeAnswer = {
   }]
 }
 
-describe('Survey Routes', () => {
-  beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
-  })
+beforeAll(async () => {
+  await MongoHelper.connect(process.env.MONGO_URL)
+})
 
-  afterAll(async () => {
-    await MongoHelper.disconnect()
-  })
+afterAll(async () => {
+  await MongoHelper.disconnect()
+})
 
-  beforeEach(async () => {
-    surveyCollection = await MongoHelper.getCollection('surveys')
-    await surveyCollection.deleteMany({})
-    accountCollection = await MongoHelper.getCollection('accounts')
-    await accountCollection.deleteMany({})
-  })
+beforeEach(async () => {
+  surveyCollection = await MongoHelper.getCollection('surveys')
+  await surveyCollection.deleteMany({})
+  accountCollection = await MongoHelper.getCollection('accounts')
+  await accountCollection.deleteMany({})
+})
 
+describe('POST /Surveys', () => {
   test('Should return 403 on add survey without accessToken', async () => {
     await request(app)
       .post('/api/surveys')
@@ -69,29 +69,38 @@ describe('Survey Routes', () => {
       .send(fakeAnswer)
       .expect(204)
   })
+})
 
-  test('Should return all Surveys on success', async () => {
+describe('GET /Surveys', () => {
+  test('Should return 403 load surveys without accessToken', async () => {
     await surveyCollection.insertOne(fakeAnswer)
 
-    const surveys = await request(app)
+    await request(app)
       .get('/api/surveys')
-
-    expect(surveys.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining(
-          {
-            question: 'Question',
-            answers: [{
-              image: 'http://image-name.com',
-              answer: 'answer 1'
-            },
-            {
-              answer: 'answer 2'
-            }]
-          }
-        )
-      ]
-      )
-    )
+      .expect(403)
   })
+  // test('Should return 403 load surveys without accessToken', async () => {
+  //   await surveyCollection.insertOne(fakeAnswer)
+
+  //   const surveys = await request(app)
+  //     .get('/api/surveys')
+
+  //   expect(surveys.body).toEqual(
+  //     expect.arrayContaining([
+  //       expect.objectContaining(
+  //         {
+  //           question: 'Question',
+  //           answers: [{
+  //             image: 'http://image-name.com',
+  //             answer: 'answer 1'
+  //           },
+  //           {
+  //             answer: 'answer 2'
+  //           }]
+  //         }
+  //       )
+  //     ]
+  //     )
+  //   )
+  // })
 })
