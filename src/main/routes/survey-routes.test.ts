@@ -79,28 +79,4 @@ describe('GET /Surveys', () => {
       .get('/api/surveys')
       .expect(403)
   })
-  // test('Should return 403 load surveys without accessToken', async () => {
-  //   await surveyCollection.insertOne(fakeAnswer)
-
-  //   const surveys = await request(app)
-  //     .get('/api/surveys')
-
-  //   expect(surveys.body).toEqual(
-  //     expect.arrayContaining([
-  //       expect.objectContaining(
-  //         {
-  //           question: 'Question',
-  //           answers: [{
-  //             image: 'http://image-name.com',
-  //             answer: 'answer 1'
-  //           },
-  //           {
-  //             answer: 'answer 2'
-  //           }]
-  //         }
-  //       )
-  //     ]
-  //     )
-  //   )
-  // })
 })
