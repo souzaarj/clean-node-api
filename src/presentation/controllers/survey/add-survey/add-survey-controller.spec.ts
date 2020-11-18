@@ -75,6 +75,7 @@ describe('AddSurvey Controller', () => {
     const addSpy = jest.spyOn(addSurveyStub, 'add')
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
+    expect(httpRequest.body).toEqual(expect.not.objectContaining({ answer: 'any_answer' }))
     expect(addSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 
