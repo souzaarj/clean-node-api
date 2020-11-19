@@ -1,5 +1,5 @@
 import mockDate from 'mockdate'
-import { AddSurveyModel } from './../../../../domain/usecases/survey/add-survey-protocols'
+import { AddSurveyModel } from '@/domain/usecases/survey/add-survey-protocols'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
