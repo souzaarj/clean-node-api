@@ -21,9 +21,10 @@ export default class AddSurveyController implements Controller {
       }
 
       const { question, answers } = httpRequest.body
-      // const answersMap = answers.map(answer => ({ image: answer?.image, answer: answer.answer }))
 
-      await this.addSurvey.add({ question, answers: answers, date: new Date() })
+      const answersMap = answers.map(answer => ({ image: answer?.image, answer: answer.answer }))
+
+      await this.addSurvey.add({ question, answers: answersMap, date: new Date() })
       return noContent()
     } catch (error) {
       return serverError(error)
