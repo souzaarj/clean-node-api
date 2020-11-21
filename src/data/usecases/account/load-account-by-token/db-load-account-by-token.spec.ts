@@ -1,5 +1,5 @@
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
-import { AccountModel } from '@/domain/models/login/account-protocols'
+import { AccountModel } from '@/domain/models/account-protocols'
 import { DbLoadAccountByToken } from './db-load-account-by-token'
 import { Decrypter } from '@/data/protocols/criptography/decrypter'
 
