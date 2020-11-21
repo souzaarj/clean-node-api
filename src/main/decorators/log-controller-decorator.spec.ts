@@ -35,7 +35,7 @@ const makeFakeHttpResponse = (): HttpResponse => ({
   }
 })
 
-interface SutTypes {
+type SutTypes = {
   sut: LogControllerDecorator
   controllerStub: Controller
   logErrorRpositoryStub: LogErrorRepository

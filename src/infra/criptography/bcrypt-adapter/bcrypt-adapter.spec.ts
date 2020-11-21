@@ -10,7 +10,7 @@ jest.mock('bcrypt', () => ({
   }
 }))
 
-interface sutType {
+type sutType = {
   sut: BcryptAdapter
   salt: number
 }
