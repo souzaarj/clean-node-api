@@ -56,6 +56,17 @@ describe('SurveyMongoRepository', () => {
     )
   })
 
+  test('Should load surveys by id into survey collection', async () => {
+    const sut = makeSut()
+    await surveyCollection.insertOne(makeFakeAddSurvey())
+    const surveys = await sut.loadAll()
+    expect(surveys).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining(makeFakeAddSurvey())
+      ])
+    )
+  })
+
   test('Should load empty list', async () => {
     const sut = makeSut()
     const surveys = await sut.loadAll()
