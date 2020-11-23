@@ -1,8 +1,8 @@
-import mockDate from 'mockdate'
 import { AddSurveyModel } from '@/domain/usecases/survey/add-survey-protocols'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
+import mockDate from 'mockdate'
 
 let surveyCollection: Collection
 
@@ -71,5 +71,14 @@ describe('SurveyMongoRepository', () => {
     const sut = makeSut()
     const surveys = await sut.loadAll()
     expect(surveys).toHaveLength(0)
+  })
+
+  test('Should load survey by id on surveyResult ', async () => {
+    const sut = await makeSut()
+    const result = await surveyCollection.insertOne(makeFakeAddSurvey())
+    const surveyId = result.ops[0]._id
+    const survey = await sut.loadById(surveyId)
+    console.log(survey)
+    expect(survey).toBeTruthy()
   })
 })
