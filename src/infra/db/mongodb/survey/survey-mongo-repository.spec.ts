@@ -45,24 +45,14 @@ describe('SurveyMongoRepository', () => {
     expect(surveys).toBeTruthy()
   })
 
-  test('Should load surveys into survey collection', async () => {
-    const sut = makeSut()
-    await surveyCollection.insertOne(makeFakeAddSurvey())
-    const surveys = await sut.loadAll()
-    expect(surveys).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining(makeFakeAddSurvey())
-      ])
-    )
-  })
-
   test('Should load surveys by id into survey collection', async () => {
     const sut = makeSut()
     await surveyCollection.insertOne(makeFakeAddSurvey())
     const surveys = await sut.loadAll()
     expect(surveys).toEqual(
       expect.arrayContaining([
-        expect.objectContaining(makeFakeAddSurvey())
+        expect.objectContaining(makeFakeAddSurvey()),
+        expect.objectContaining({ id: expect.anything() })
       ])
     )
   })
@@ -78,7 +68,7 @@ describe('SurveyMongoRepository', () => {
     const result = await surveyCollection.insertOne(makeFakeAddSurvey())
     const surveyId = result.ops[0]._id
     const survey = await sut.loadById(surveyId)
-    console.log(survey)
+    expect(survey.id).toBeTruthy()
     expect(survey).toBeTruthy()
   })
 })
