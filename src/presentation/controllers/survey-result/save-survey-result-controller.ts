@@ -1,14 +1,23 @@
+import { HttpResponse, HttpRequest } from '@/presentation/protocols/http'
+import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result-protocols'
 import { badRequest } from '@/presentation/helpers/http/http-helper'
 import { Validation } from '@/presentation/protocols/validation'
 import { Controller } from '@/presentation/protocols/controller'
-import { HttpRequest, HttpResponse } from '../login/login/login-controller-protocols'
+
 export class SaveSurveyResultController implements Controller {
-  constructor (private readonly validation: Validation) { }
+  constructor (
+    private readonly validation: Validation,
+    private readonly saveSurveyResult: SaveSurveyResult
+  ) { }
+
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const validationError = this.validation.validate(httpRequest.body)
+
     if (validationError) {
       return badRequest(validationError)
     }
+
+    await this.saveSurveyResult.save(httpRequest.body)
     return null
   }
 }
