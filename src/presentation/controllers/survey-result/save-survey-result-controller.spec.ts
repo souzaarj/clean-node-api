@@ -1,3 +1,4 @@
+import { serverError } from './../../helpers/http/http-helper'
 import { SurveyResultModel } from '@/domain/models/survey-result-protocols'
 import { SaveSurveyResultModel , SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result-protocols'
 import { badRequest } from '@/presentation/helpers/http/http-helper'
@@ -83,5 +84,12 @@ describe('SaveSurveyResult Controller', () => {
       accountId: 'any_account_id',
       answer: 'any_answer'
     })
+  })
+
+  test('Should return 500 if  saveSurveyResult throws', async () => {
+    const { sut, saveSurveyResultStub } = makeSut()
+    jest.spyOn(saveSurveyResultStub, 'save').mockRejectedValueOnce(new Error())
+    const response = await sut.handle(makeFakeRequest())
+    expect(response).toEqual(serverError(new Error()))
   })
 })
