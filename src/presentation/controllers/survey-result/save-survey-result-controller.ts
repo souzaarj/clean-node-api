@@ -1,3 +1,4 @@
+import { serverError } from './../../helpers/http/http-helper'
 import { HttpResponse, HttpRequest } from '@/presentation/protocols/http'
 import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result-protocols'
 import { badRequest } from '@/presentation/helpers/http/http-helper'
@@ -11,13 +12,17 @@ export class SaveSurveyResultController implements Controller {
   ) { }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const validationError = this.validation.validate(httpRequest.body)
+    try {
+      const validationError = this.validation.validate(httpRequest.body)
 
-    if (validationError) {
-      return badRequest(validationError)
+      if (validationError) {
+        return badRequest(validationError)
+      }
+
+      await this.saveSurveyResult.save(httpRequest.body)
+      return null
+    } catch (error) {
+      return serverError(error)
     }
-
-    await this.saveSurveyResult.save(httpRequest.body)
-    return null
   }
 }
