@@ -1,3 +1,4 @@
+import { LoadSurveyById } from './../../../domain/usecases/survey/load-survey-by-id-protocols'
 import { serverError } from './../../helpers/http/http-helper'
 import { HttpResponse, HttpRequest } from '@/presentation/protocols/http'
 import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result-protocols'
@@ -8,6 +9,7 @@ import { Controller } from '@/presentation/protocols/controller'
 export class SaveSurveyResultController implements Controller {
   constructor (
     private readonly validation: Validation,
+    private readonly loadSurveyById: LoadSurveyById,
     private readonly saveSurveyResult: SaveSurveyResult
   ) { }
 
@@ -18,6 +20,10 @@ export class SaveSurveyResultController implements Controller {
       if (validationError) {
         return badRequest(validationError)
       }
+
+      const { surveyId } = httpRequest.body
+
+      await this.loadSurveyById.loadById(surveyId)
 
       await this.saveSurveyResult.save(httpRequest.body)
       return null
