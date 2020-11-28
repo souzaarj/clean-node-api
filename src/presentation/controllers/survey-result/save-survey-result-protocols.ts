@@ -1,0 +1,6 @@
+export * from '@/presentation/protocols'
+export * from '@/domain/usecases/survey/load-survey-by-id-protocols'
+export * from '@/domain/usecases/survey-result/save-survey-result-protocols'
+export * from '@/presentation/helpers/http/http-helper'
+export * from '@/domain/models/survey-result-protocols'
+export * from '@/domain/models/survey-protocols'

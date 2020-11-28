@@ -1,10 +1,14 @@
-import { LoadSurveyById } from './../../../domain/usecases/survey/load-survey-by-id-protocols'
-import { serverError } from './../../helpers/http/http-helper'
-import { HttpResponse, HttpRequest } from '@/presentation/protocols/http'
-import { SaveSurveyResult } from '@/domain/usecases/survey-result/save-survey-result-protocols'
-import { badRequest } from '@/presentation/helpers/http/http-helper'
-import { Validation } from '@/presentation/protocols/validation'
-import { Controller } from '@/presentation/protocols/controller'
+import { forbidden } from './../../helpers/http/http-helper'
+import { InvalidParamError } from './../../errors/invalid-param-error'
+import {
+  Controller,
+  Validation,
+  LoadSurveyById,
+  HttpResponse,
+  HttpRequest,
+  SaveSurveyResult,
+  serverError
+} from './save-survey-result-protocols'
 
 export class SaveSurveyResultController implements Controller {
   constructor (
@@ -15,17 +19,21 @@ export class SaveSurveyResultController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const validationError = this.validation.validate(httpRequest.body)
+      const { surveyId } = httpRequest.params
+      const { answer } = httpRequest.body
+      const survey = await this.loadSurveyById.loadById(surveyId)
 
-      if (validationError) {
-        return badRequest(validationError)
+      if (survey) {
+        const answers = survey.answers.map(a => a.answer)
+        if (!answers.includes(answer)) {
+          return forbidden(new InvalidParamError('answer'))
+        }
+      } else {
+        return forbidden(new InvalidParamError('surveyId'))
       }
 
-      const { surveyId } = httpRequest.body
-
-      await this.loadSurveyById.loadById(surveyId)
-
       await this.saveSurveyResult.save(httpRequest.body)
+
       return null
     } catch (error) {
       return serverError(error)
