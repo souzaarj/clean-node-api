@@ -1,18 +1,15 @@
-import { forbidden } from '@/presentation/helpers/http/http-helper'
-import { InvalidParamError } from '@/presentation/errors/invalid-param-error'
+import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
+import { InvalidParamError } from '@/presentation/errors'
 import {
   Controller,
-  Validation,
   LoadSurveyById,
   HttpResponse,
   HttpRequest,
-  SaveSurveyResult,
-  serverError
+  SaveSurveyResult
 } from './save-survey-result-protocols'
 
 export class SaveSurveyResultController implements Controller {
   constructor (
-    private readonly validation: Validation,
     private readonly loadSurveyById: LoadSurveyById,
     private readonly saveSurveyResult: SaveSurveyResult
   ) { }
