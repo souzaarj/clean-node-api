@@ -7,7 +7,6 @@
       "@typescript-eslint/comma-spacing":"off",
       "@typescript-eslint/strict-boolean-expressions":"off",
       "@typescript-eslint/restrict-template-expressions":"off",
-      "@typescript-eslint/no-redeclare":"off",
       "@typescript-eslint/consistent-type-definitions":"off"
-   }
- }
+    }
+  }
