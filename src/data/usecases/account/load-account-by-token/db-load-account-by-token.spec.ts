@@ -1,29 +1,8 @@
-import { LoadAccountByTokenRepository, AccountModel, Decrypter } from './load-account-by-token-protocols'
+import { mockLoadAccountByTokenRepository } from '@/data/test/mock-db-account'
+import { maockDecrypter } from '@/data/test/mock-criptography'
+import { mockAccountModel } from '@/domain/test/mock-account'
+import { LoadAccountByTokenRepository, Decrypter } from './load-account-by-token-protocols'
 import { DbLoadAccountByToken } from './db-load-account-by-token'
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: '@mail.com',
-  password: 'hashed_password'
-})
-
-const makeDecrypterStub = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt (token: string): Promise<string> {
-      return 'any_value'
-    }
-  }
-  return new DecrypterStub()
-}
-const makeLoadAccountByTokenRepositoryStub = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
-    async loadByToken (token: string, role?: string): Promise<AccountModel> {
-      return makeFakeAccount()
-    }
-  }
-  return new LoadAccountByTokenRepositoryStub()
-}
 
 type SutTypes = {
   sut: DbLoadAccountByToken
@@ -32,8 +11,8 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypterStub()
-  const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepositoryStub()
+  const decrypterStub = maockDecrypter()
+  const loadAccountByTokenRepositoryStub = mockLoadAccountByTokenRepository()
   const sut = new DbLoadAccountByToken(decrypterStub, loadAccountByTokenRepositoryStub)
   return {
     sut,
@@ -74,7 +53,7 @@ describe('DBLoadAccountByToken Usecase', () => {
   test('Should return an account on success', async () => {
     const { sut } = makeSut()
     const account = await sut.load('any_token', 'any_role')
-    expect(account).toEqual(makeFakeAccount())
+    expect(account).toEqual(mockAccountModel())
   })
 
   test('Should throw if Decrypter throws ', async () => {
