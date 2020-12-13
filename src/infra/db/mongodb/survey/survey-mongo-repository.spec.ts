@@ -1,24 +1,10 @@
-import { AddSurveyModel } from '@/domain/usecases/survey/add-survey-protocols'
+import { mockAddSurveyParams } from '@/domain/test/mock-survey'
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
 import mockDate from 'mockdate'
 
 let surveyCollection: Collection
-
-const makeFakeAddSurvey = (): AddSurveyModel => (
-  {
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    },
-    {
-      answer: 'other_answer'
-    }],
-    date: new Date()
-  }
-)
 
 const makeSut = (): SurveyMongoRepository => new SurveyMongoRepository()
 
@@ -40,18 +26,18 @@ describe('SurveyMongoRepository', () => {
   test('Should add survey into survey collection', async () => {
     const sut = makeSut()
 
-    await sut.add(makeFakeAddSurvey())
+    await sut.add(mockAddSurveyParams())
     const surveys = await surveyCollection.findOne({ question: 'any_question' })
     expect(surveys).toBeTruthy()
   })
 
   test('Should load surveys by id into survey collection', async () => {
     const sut = makeSut()
-    await surveyCollection.insertOne(makeFakeAddSurvey())
+    await surveyCollection.insertOne(mockAddSurveyParams())
     const surveys = await sut.loadAll()
     expect(surveys).toEqual(
       expect.arrayContaining([
-        expect.objectContaining(makeFakeAddSurvey()),
+        expect.objectContaining(mockAddSurveyParams()),
         expect.objectContaining({ id: expect.anything() })
       ])
     )
@@ -65,7 +51,7 @@ describe('SurveyMongoRepository', () => {
 
   test('Should load survey by id on surveyResult ', async () => {
     const sut = await makeSut()
-    const result = await surveyCollection.insertOne(makeFakeAddSurvey())
+    const result = await surveyCollection.insertOne(mockAddSurveyParams())
     const surveyId = result.ops[0]._id
     const survey = await sut.loadById(surveyId)
     expect(survey.id).toBeTruthy()

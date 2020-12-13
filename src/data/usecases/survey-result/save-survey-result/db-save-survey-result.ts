@@ -1,4 +1,4 @@
-import { SaveSurveyResultModel } from '@/domain/usecases/survey-result/save-survey-result-protocols'
+import { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result-protocols'
 import { SurveyResultModel } from '@/domain/models/survey-result-protocols'
 import { SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository'
 import { SurveyResultMongoRepository } from '@/infra/db/mongodb/survey-result/survey-result-mongo-repository'
@@ -7,7 +7,7 @@ export class DbSaveSurveyResult implements SaveSurveyResultRepository {
     private readonly saveSurveyResultRepository: SurveyResultMongoRepository
   ) { }
 
-  async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
     const surveyResult = await this.saveSurveyResultRepository.save(data)
     return surveyResult
   }
