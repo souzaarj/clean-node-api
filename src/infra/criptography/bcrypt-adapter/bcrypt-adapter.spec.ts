@@ -38,7 +38,7 @@ describe('Bcrypt Adapter', () => {
       expect(hash).toBe('hash_value')
     })
 
-    test('Shoud throw if BcryptAdapter throws', async () => {
+    test('Should throw if BcryptAdapter hash throws', async () => {
       const { sut } = makeSut()
       jest
         .spyOn(bcrypt, 'hash')

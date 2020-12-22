@@ -7,7 +7,7 @@ import { AddAccount, AddAccountParams } from '@/domain/usecases/account/add-acco
 export const mockAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountParams): Promise<AccountModel> {
-      return await Promise.resolve(mockAccountModel())
+      return mockAccountModel()
     }
   }
   return new AddAccountStub()
