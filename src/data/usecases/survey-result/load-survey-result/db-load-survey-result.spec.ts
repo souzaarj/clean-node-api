@@ -44,11 +44,17 @@ describe('LoadSurveyResult UseCase', () => {
 
   test('should call loadSurveyByIdRepository if LoadSurveyResultRepository returns null', async () => {
     const { sut, loadSurveyResultRepositoryStub, loadSurveyByIdRepositoryStub } = makeSut()
-    const loadByIdSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockResolvedValue(null)
-
+    const loadByIdSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
     jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockResolvedValue(null)
-    await sut.load('any_survey_id')
-    await expect(loadByIdSpy).toHaveBeenLastCalledWith('any_survey_id')
+    await sut.load('any_id')
+    await expect(loadByIdSpy).toHaveBeenLastCalledWith('any_id')
+  })
+
+  test('should return surveyResultModel with all answers with  count 0 if  LoadSurveyResultRepository returns null', async () => {
+    const { sut, loadSurveyResultRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyResultRepositoryStub, 'loadBySurveyId').mockResolvedValue(null)
+    const surveyResult = await sut.load('any_survey_id')
+    await expect(surveyResult).toEqual(mockSurveyResultModel())
   })
 
   test('should throws if LoadSurveyResultRepository throw', async () => {
