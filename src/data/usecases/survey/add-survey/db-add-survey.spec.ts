@@ -1,4 +1,4 @@
-import { mockAddSurveyParams } from './../../../../domain/test/mock-survey'
+import { mockAddSurveyParams } from '@/domain/test/mock-survey'
 import { mockAddSurveyRepositoryStub } from '@/data/test/'
 import { DbAddSurvey } from './db-add-survey'
 import { AddSurvey, AddSurveyRepository } from './db-add-survey.protocols'

@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb'
 import { SurveyModel } from '@/domain/models/survey-protocols'
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository, LoadSurveyResultRepository {
   loadById: (id: string) => Promise<SurveyModel>
-  async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
+  async save (data: SaveSurveyResultParams): Promise<void> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate(
       {
@@ -22,8 +22,6 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository, 
       {
         upsert: true
       })
-    const surveyResult = await this.loadBySurveyId(data.surveyId)
-    return surveyResult
   }
 
   async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
