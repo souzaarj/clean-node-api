@@ -1,5 +1,5 @@
-import { InvalidParamError } from './../../../errors/invalid-param-error'
-import { forbidden } from '@/presentation/helpers/http/http-helper'
+import { ServerError, InvalidParamError } from '@/presentation/errors'
+import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
 import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id-protocols'
 import { LoadSurveyResultController } from './load-survey-result-controller'
 import { mockSurveyModel } from '@/domain/test/mock-survey'
@@ -44,5 +44,14 @@ describe('LoadSurveyResult Controller', () => {
       params: { surveyId: 'any_id' }
     })
     expect(response).toEqual(forbidden(new InvalidParamError('surveyId')))
+  })
+
+  test('should return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockRejectedValueOnce(new Error())
+    const response = await sut.handle({
+      params: { surveyId: 'any_id' }
+    })
+    expect(response).toEqual(serverError(new ServerError('')))
   })
 })
