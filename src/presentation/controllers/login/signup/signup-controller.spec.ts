@@ -72,7 +72,7 @@ describe('Signup Controller', () => {
     // sut = system under test
     const { sut, authenticationSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: authenticationSpy.token }))
+    expect(httpResponse).toEqual(ok(authenticationSpy.authenticationModel))
   })
 
   test('Should calls Validation with correct values', async () => {
