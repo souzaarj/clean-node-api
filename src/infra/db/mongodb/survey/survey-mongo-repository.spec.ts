@@ -23,24 +23,23 @@ describe('SurveyMongoRepository', () => {
     await surveyCollection.deleteMany({})
   })
 
-  test('Should add survey into survey collection', async () => {
+  test('Should add survey on success', async () => {
     const sut = makeSut()
 
     await sut.add(mockAddSurveyParams())
-    const surveys = await surveyCollection.findOne({ question: 'any_question' })
-    expect(surveys).toBeTruthy()
+    const count = await surveyCollection.countDocuments()
+    expect(count).toBe(1)
   })
 
-  test('Should load surveys by id into survey collection', async () => {
+  test('Should load all surveys on success', async () => {
+    const addSurveyModels = [mockAddSurveyParams(), mockAddSurveyParams()]
+    await surveyCollection.insertMany(addSurveyModels)
     const sut = makeSut()
-    await surveyCollection.insertOne(mockAddSurveyParams())
     const surveys = await sut.loadAll()
-    expect(surveys).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining(mockAddSurveyParams()),
-        expect.objectContaining({ id: expect.anything() })
-      ])
-    )
+    expect(surveys.length).toBe(2)
+    expect(surveys[0].id).toBeTruthy()
+    expect(surveys[0].question).toBe(addSurveyModels[0].question)
+    expect(surveys[1].question).toBe(addSurveyModels[1].question)
   })
 
   test('Should load empty list', async () => {

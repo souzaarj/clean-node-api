@@ -23,33 +23,36 @@ describe('Account Mongo Repository', () => {
     return new AccountMongoRepository()
   }
   describe('add()', () => {
-    test('Should return an account on add success', async () => {
+    test('Should return an account on success', async () => {
       const sut = makeSut()
-      const account = await sut.add(mockAddAccountParams())
+      const addAccountParams = mockAddAccountParams()
+      const account = await sut.add(addAccountParams)
 
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
-      expect(account.name).toBe('any_name')
-      expect(account.email).toBe('any_email@mail.com')
-      expect(account.password).toBe('any_password')
+      expect(account.name).toBe(addAccountParams.name)
+      expect(account.email).toBe(addAccountParams.email)
+      expect(account.password).toBe(addAccountParams.password)
     })
   })
 
   describe('loadByEmail()', () => {
     test('Should return an account on loadByEmail success', async () => {
       const sut = makeSut()
-      await accountCollection.insertOne(mockAddAccountParams())
-      const account = await sut.loadByEmail('any_email@mail.com')
+      const addAccountParams = mockAddAccountParams()
+      await accountCollection.insertOne(addAccountParams)
+      const account = await sut.loadByEmail(addAccountParams.email)
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
-      expect(account.name).toBe('any_name')
-      expect(account.email).toBe('any_email@mail.com')
-      expect(account.password).toBe('any_password')
+      expect(account.name).toBe(addAccountParams.name)
+      expect(account.email).toBe(addAccountParams.email)
+      expect(account.password).toBe(addAccountParams.password)
     })
 
     test('Should return null if loadByEmail fails', async () => {
       const sut = makeSut()
-      const account = await sut.loadByEmail('any_email@mail.com')
+      const addAccountParams = mockAddAccountParams()
+      const account = await sut.loadByEmail(addAccountParams.email)
       expect(account).toBeFalsy()
     })
   })
