@@ -1,8 +1,8 @@
-globalConfig.json
-node_modules
-dist
-coverage
-data
+node_modules/
+dist/
+coverage/
+data/
 !src/data
 .vscode
 .eslintcache
+globalConfig.json
