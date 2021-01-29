@@ -14,13 +14,13 @@ export class LoadSurveyResultController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { surveyId } = httpRequest.params
-      const result = await this.loadSurveyById.loadById(surveyId)
+      const { surveyId, accountId } = httpRequest.params
+      const result = await this.loadSurveyById.loadById(surveyId, accountId)
 
       if (!result) {
         return forbidden(new InvalidParamError('surveyId'))
       }
-      const surveyResult = await this.loadSurveyResult.load(surveyId)
+      const surveyResult = await this.loadSurveyResult.load(surveyId, httpRequest.accountId)
       return ok(surveyResult)
     } catch (error) {
       return serverError(new ServerError(error))

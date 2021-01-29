@@ -19,7 +19,7 @@ export class SaveSurveyResultController implements Controller {
       const { surveyId } = httpRequest.params
       const { answer } = httpRequest.body
       const accountId = httpRequest.accountId
-      const survey = await this.loadSurveyById.loadById(surveyId)
+      const survey = await this.loadSurveyById.loadById(surveyId, accountId)
 
       if (survey) {
         const answers = survey.answers.map(a => a.answer)
