@@ -1,4 +1,4 @@
-import { makeLoadSurveysController } from './../../factories/controllers/survey/load-survey/load-survey-controller-factory'
+import { makeLoadSurveysController } from '@/main/factories'
 export default {
   Query: {
     async surveys (): Promise<any> {

@@ -1,4 +1,4 @@
-import { serverError } from '@/presentation/helpers/http/http-helper'
+import { serverError } from '@/presentation/helpers/http-helper'
 import { HttpRequest, Middleware } from '@/presentation/protocols'
 import { Request, Response, NextFunction } from 'express'
 

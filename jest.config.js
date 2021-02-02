@@ -1,14 +1,11 @@
 
 const config = {
 
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/tests'],
 
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/main/**',
-    '!<rootDir>/src/**/*protocols.ts',
-    '!**/protocols/**',
-    '!**/test/**'
+    '!<rootDir>/src/main/**'
   ],
 
   coverageDirectory: 'coverage',
@@ -19,12 +16,8 @@ const config = {
     '.+\\.ts$': 'ts-jest'
   },
 
-  moduleFileExtensions: [
-    'ts',
-    'tsx',
-    'js'
-  ],
   moduleNameMapper: {
+    '@/tests/(.*)': '<rootDir>/tests/$1',
     '@/(.*)': '<rootDir>/src/$1'
   }
 }
